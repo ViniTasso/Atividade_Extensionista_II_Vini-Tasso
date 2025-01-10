@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Translation App</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+
+        /* First Section */
+        .top-section {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px;
+            background-color: #f1f1f1;
+        }
+
+        .flag-select {
+            display: flex;
+            gap: 10px;
+        }
+
+        .flag-button {
+            width: 50px;
+            height: 50px;
+            border-radius: 50%;
+            border: 1px solid #ccc;
+            background-color: #fff;
+            cursor: pointer;
+        }
+
+        /* Second Section */
+        .middle-section {
+            flex: 1;
+            overflow-y: auto;
+            padding: 10px;
+            background-color: #eaeaea;
+            display: flex;
+            flex-direction: column;
+            gap: 20px;
+        }
+
+        .main-button {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            border: 2px solid #555;
+            background-color: #8ecae6;
+            cursor: pointer;
+            position: relative;
+        }
+
+        .sub-button-container {
+            display: flex;
+            gap: 10px;
+            margin-left: 80px;
+        }
+
+        .sub-button {
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            border: 1px solid #555;
+            background-color: #ffb703;
+            cursor: pointer;
+        }
+
+        /* Third Section */
+        .bottom-section {
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            padding: 10px;
+            background-color: #f1f1f1;
+        }
+
+        .control-button {
+            width: 80px;
+            height: 80px;
+            border-radius: 10px;
+            border: 2px solid #444;
+            background-color: #fff;
+            box-shadow: inset 2px 2px 5px #ccc, inset -2px -2px 5px #fff;
+            cursor: pointer;
+            font-size: 18px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Top Section -->
+    <div class="top-section">
+        <div>Choose Language:</div>
+        <div class="flag-select">
+            <button class="flag-button" onclick="handleFlagClick('en')">🇺🇸</button>
+            <button class="flag-button" onclick="handleFlagClick('pt')">🇧🇷</button>
+            <button class="flag-button" onclick="handleFlagClick('es')">🇪🇸</button>
+        </div>
+    </div>
+
+    <!-- Middle Section -->
+    <div class="middle-section">
+        <div>
+            <button class="main-button" onclick="handleMainButtonClick(1)"></button>
+            <div class="sub-button-container">
+                <button class="sub-button" onclick="handleSubButtonClick(1, 1)"></button>
+                <button class="sub-button" onclick="handleSubButtonClick(1, 2)"></button>
+                <button class="sub-button" onclick="handleSubButtonClick(1, 3)"></button>
+            </div>
+        </div>
+        <div>
+            <button class="main-button" onclick="handleMainButtonClick(2)"></button>
+            <div class="sub-button-container">
+                <button class="sub-button" onclick="handleSubButtonClick(2, 1)"></button>
+                <button class="sub-button" onclick="handleSubButtonClick(2, 2)"></button>
+                <button class="sub-button" onclick="handleSubButtonClick(2, 3)"></button>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bottom Section -->
+    <div class="bottom-section">
+        <button class="control-button" onclick="handleControlButtonClick('home')">🏠</button>
+        <button class="control-button" onclick="handleControlButtonClick('book')">📖</button>
+        <button class="control-button" onclick="handleControlButtonClick('repeat')">🔁</button>
+    </div>
+
+    <script>
+        function handleFlagClick(language) {
+            console.log(`Selected language: ${language}`);
+        }
+
+        function handleMainButtonClick(mainId) {
+            console.log(`Main button ${mainId} clicked`);
+        }
+
+        function handleSubButtonClick(mainId, subId) {
+            console.log(`Sub button ${mainId}-${subId} clicked`);
+        }
+
+        function handleControlButtonClick(action) {
+            console.log(`Control button ${action} clicked`);
+        }
+    </script>
+</body>
+
+</html>

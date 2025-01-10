@@ -1,0 +1,19 @@
+<LevelButton@Button>:
+    size_hint: None, None
+    size: 50, 50
+    round: True
+
+<LevelGrid>:
+    canvas:
+        Color:
+            rgba: 1, 1, 1, 1  # Fundo branco
+        Rectangle:
+            pos: self.pos
+            size: self.size
+
+    LevelButton:
+        text: 'Start'
+        on_press:
+            # Aqui você adicionaria a lógica para criar os próximos níveis
+            # Por exemplo, chamando a função create_level_tree
+            
