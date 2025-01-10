@@ -75,7 +75,7 @@ class TranslationApp(App):
 
     # Funções de callback para os botões
     def handle_flag_click(self, language):
-        print(f"Selected language: {language}")
+        print(f"Selected prefered language: {language}")
 
     def handle_main_button_click(self, main_id):
         print(f"Main button {main_id} clicked")
