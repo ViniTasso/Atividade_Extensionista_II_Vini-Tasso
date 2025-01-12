@@ -1,4 +1,7 @@
 
+import pygame
+from kivy.app import App
+
 import os
 import textwrap
 import json
@@ -6,7 +9,10 @@ from src import util
 import google.generativeai as genai
 import google.ai.generativelanguage as glm
 from googletrans import Translator as translator
-import googletrans
+#import googletrans
+
+#BIBLIOTECAS PESSOAIS
+from wtf.view_openai_kivy import TranslationApp
 
 
 #FUNÇÕES
@@ -297,6 +303,10 @@ responder na conversa.\n      - Digite traduza para ver a tradução da conversa
 GOOGLE_API_KEY=os.getenv('GOOGLE_API_KEY')
 genai.configure(api_key=GOOGLE_API_KEY)
 
+TranslationApp().run()
+
+
+
 idioma = ""
 
 while(True):
@@ -332,6 +342,7 @@ model = genai.GenerativeModel("models/gemini-1.0-pro")
 print("Qual vai ser o nosso estudo hoje?")
 print("1- Treinar conversação.")
 print("2- Traduzir frase.")
+print("3- Tela frase.")
 print("0- Para SAIR!\n")
 print("Outros modelos serão implementados em breve!")
 
