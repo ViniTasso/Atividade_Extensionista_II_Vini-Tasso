@@ -6,6 +6,7 @@ from kivy.uix.button import Button
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.label import Label
 from src.textToSpeech_openai import textToSpeech_openai as speech
+from src.studing import Chating
 
 class TranslationApp(App):
 
@@ -51,7 +52,7 @@ class TranslationApp(App):
         controls = [("🏠", "home"), ("📖", "book"), ("🔁", "repeat")]
         for icon, action in controls:
             btn = Button(
-                text=icon,
+                text=action,
                 size_hint=(1, 1),
                 background_color=(1, 1, 1, 1),
                 on_press=lambda instance, action=action: self.handle_control_button_click(action),
@@ -132,7 +133,11 @@ class TranslationApp(App):
 
     def handle_control_button_click(self, action):
         print(f"Control button {action} clicked")
-
+        if action == "book":
+            chat = Chating()
+            resposta = chat.unica_pergunta("Você pode conversar comigo?")
+            print("A resposta foi: "+resposta )
+    
     """
     # Executa a aplicação
     if __name__ == "__main__":
