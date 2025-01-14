@@ -1,0 +1,69 @@
+
+<main_screen>:
+    BoxLayout:
+        orientation:"vertical"
+
+        # Seção superior
+        BoxLayout:
+            id: "top_section"
+            orientation:"horizontal"
+            size_hint:1, 0.1
+            padding:10
+            spacing:10
+            Label:
+                text:"Choose Language:"
+                size_hint:0.4, 1
+
+            Button:
+                text: "🇺🇸"
+                size_hint: 0.3, 1
+                on_press: root.handle_flag_click("en")
+
+            Button:
+                text: "🇧🇷"
+                size_hint: 0.3, 1
+                on_press: app.handle_flag_click("pt")
+
+            Button:
+                text: "🇪🇸"
+                size_hint: 0.3, 1
+                on_press: app.handle_flag_click("es")
+
+        # Seção do meio (rolável)
+        ScrollView:
+            id: scroll_layout
+            size_hint: 1, 1
+            background_color: 15 , 100 , 50 , 1
+            BoxLayout:
+                id: middle_section
+                orientation: "vertical"
+                size_hint_y: 1 #None precisei preencher 100% pois não estava reajustando quando inseria widget
+                padding:10
+                spacing:20
+                background_color: 1 , 0 , 50 , 1
+                #bind: minimum_height=scroll_layout.setter("height")
+
+        BoxLayout:
+            id: "bottom_section"
+            orientation: "horizontal"
+            size_hint: 1, 0.2
+            padding:10
+            spacing:10
+            Button:
+                text: "home"
+                size_hint: 0.3, 1
+                on_press: app.handle_control_button_click("home")
+                size_hint: 1, 1
+                background_color:1, 1, 1, 1
+            Button:
+                text: "book"
+                size_hint: 0.3, 1
+                on_press: app.handle_control_button_click("home")
+                size_hint: 1, 1
+                background_color:1, 1, 1, 1
+            Button:
+                text: "repeat"
+                size_hint: 0.3, 1
+                on_press: app.handle_control_button_click("home")
+                size_hint: 1, 1
+                background_color:1, 1, 1, 1

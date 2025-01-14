@@ -1,12 +1,24 @@
 
-import pygame
+import pygame #apenas para evitar erro de compatibilidade com a biblioteca 
 from kivy.app import App
+from kivy.uix.screenmanager import ScreenManager
 
 
 #BIBLIOTECAS PESSOAIS
 from wtf.main_screen import TranslationApp
+from views.main_screen import main_screen
 
-TranslationApp().run()
+class main(App):
+    def build(self):
+        sm = ScreenManager()
+        sm.add_widget(main_screen(name="main_screen"))
+        return sm
+    def handle_flag_click(self, language):
+        print(f"Selected prefered language: {language}")
+if __name__ == "__main__":
+    main().run()
+        
+    #TranslationApp().run()
 
 
 

@@ -90,36 +90,7 @@ class TranslationApp(App):
 
             scroll_layout.add_widget(sub_layout)
         return scroll_layout
-    
-    """_summary_ Teste criado pela IA
-    """
-    def create_buttom_test(scroll_layout: BoxLayout):
-        for main_id in range(1, 4):
-            main_button = Button(
-                text=f"Main {main_id}",
-                size_hint_y=None,
-                height=60,
-                background_color=(0.55, 0.8, 1, 1),
-                on_press=lambda instance, main_id=main_id: TranslationApp.handle_main_button_click(super, main_id),
-            )
-            scroll_layout.add_widget(main_button)
 
-            # Sub botões
-            sub_layout = BoxLayout(orientation="horizontal", spacing=10, padding=(20, 0))
-            for sub_id in range(1, 4):
-                sub_button = Button(
-                    text=f"S{sub_id}",
-                    size_hint_y=None,
-                    height=40,
-                    width=40,
-                    size_hint=(None, None),
-                    background_color=(1, 0.7, 0.2, 1),
-                    on_press=lambda instance, main_id=main_id, sub_id=sub_id: TranslationApp.handle_sub_button_click(super, main_id, sub_id),
-                )
-                sub_layout.add_widget(sub_button)
-
-            scroll_layout.add_widget(sub_layout)
-            return scroll_layout
     # Funções de callback para os botões
     def handle_flag_click(self, language):
         print(f"Selected prefered language: {language}")
