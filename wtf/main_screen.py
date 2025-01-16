@@ -6,7 +6,7 @@ from kivy.uix.button import Button
 from kivy.uix.scrollview import ScrollView
 from kivy.uix.label import Label
 from src.textToSpeech_openai import textToSpeech_openai as speech
-from src.studing import Chating
+from src.Chating_IA import Chating_IA
 
 class TranslationApp(App):
 

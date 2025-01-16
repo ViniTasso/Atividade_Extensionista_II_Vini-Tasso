@@ -6,12 +6,15 @@ from kivy.uix.screenmanager import ScreenManager
 
 #BIBLIOTECAS PESSOAIS
 from wtf.main_screen import TranslationApp
+from src.Chating_IA import Chating_IA
 from views.main_screen import main_screen
+from views.chat_screen import chat_screen
 
 class main(App):
     def build(self):
         sm = ScreenManager()
         sm.add_widget(main_screen(name="main_screen"))
+        sm.add_widget(chat_screen(name="chat_screen"))
         return sm
     def handle_flag_click(self, language):
         print(f"Selected prefered language: {language}")

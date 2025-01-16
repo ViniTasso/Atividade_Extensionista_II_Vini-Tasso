@@ -1,0 +1,61 @@
+#ScreenManager:
+#   ChatScreen:
+
+<chat_screen>:
+    #name: "chat"
+
+    BoxLayout:
+        id: box_principal
+        orientation: "vertical"
+        spacing: 10
+
+        # Top bar
+        BoxLayout:
+            id: box_top
+            size_hint_y: 0.1
+            padding: [10, 5]
+            spacing: 10
+            orientation: "horizontal"
+            canvas.before:
+                Color:
+                    rgba: 0.2, 0.2, 0.2, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
+
+            Button:
+                text: "<"
+                size_hint_x: 0.1
+                on_press: root.handle_back_action("voltar")
+            Label:
+                text: "Sra Gemini - IA"
+                size_hint_x: 0.8
+                halign: "center"
+                valign: "middle"
+            Button:
+                text: "Search"
+                size_hint_x: 0.1
+        ScrollView:
+            BoxLayout:
+                id: chat_box
+                orientation: "vertical"
+                size_hint_y: None
+                height: self.minimum_height
+                spacing: 10
+                padding: [10, 10]
+
+        # Input bar
+        BoxLayout:
+            size_hint_y: 0.1
+            spacing: 10
+            padding: [10, 10]
+
+            TextInput:
+                id: message_input
+                hint_text: "Type a message..."
+                size_hint_x: 0.8
+
+            Button:
+                text: "Send"
+                size_hint_x: 0.2
+                on_press: root.send_message()

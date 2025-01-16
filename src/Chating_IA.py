@@ -7,7 +7,7 @@ import google.generativeai as genai
 import google.ai.generativelanguage as glm
 from googletrans import Translator as translator    
 
-class Chating:
+class Chating_IA:
 
     """ Os Modelos disponíveis podem ser:
     models/gemini-1.0-pro
@@ -99,12 +99,12 @@ class Chating:
             "Coucou!" é uma forma ainda mais informal e é usada entre pessoas muito próximas.
 
         """
-        modelAI = Chating.model
-        resposta = modelAI.generate_content(Chating.texto_padrao_dicas(texto=texto, idioma=Chating.idioma))
+        modelAI = Chating_IA.model
+        resposta = modelAI.generate_content(Chating_IA.texto_padrao_dicas(texto=texto, idioma=Chating_IA.idioma))
         #print("O primeiro retorno foi:\n"+resposta.text)
 
         resposta = modelAI.generate_content(textwrap.dedent(
-            Chating.texto_padrao_JSON_dicas(resposta.text)
+            Chating_IA.texto_padrao_JSON_dicas(resposta.text)
         ))
         #print(json.dumps(json.loads(resposta.text), indent=3))
 
@@ -153,7 +153,7 @@ class Chating:
             uma string vazia.
 
         """
-        modelAI = Chating.model
+        modelAI = Chating_IA.model
         add_to_database = util.cria_Schema()
         modelAI = modelAI = genai.GenerativeModel(
             model_name='models/gemini-1.5-pro-latest',
@@ -192,7 +192,7 @@ class Chating:
         return ""
 
     def traduzir_texto(texto):
-        traducao = translator.translate(texto, dest=Chating.idioma)
+        traducao = translator.translate(texto, dest=Chating_IA.idioma)
         return traducao
 
     def unica_pergunta(self, text):
@@ -207,7 +207,7 @@ class Chating:
             - Uma string contendo a pergunta gerada pelo modelo.
 
         """
-        modelAI = Chating.model
+        modelAI = Chating_IA.model
         resposta = modelAI.generate_content(text)
         return resposta.text
 
@@ -222,7 +222,7 @@ class Chating:
         Retorno:
             - Um valor booleano indicando se o texto está no idioma especificado (True) ou não (False).
         """
-        resposta = Chating.unica_pergunta(f"O texto {texto}, está no idioma {Chating.idioma}? \nResponda apenas sim ou não.")
+        resposta = Chating_IA.unica_pergunta(f"O texto {texto}, está no idioma {Chating_IA.idioma}? \nResponda apenas sim ou não.")
         if "sim" in str.lower(resposta):
             return True
         else:
@@ -243,9 +243,9 @@ class Chating:
         print("Escolha um assunto para conversar!")
         #ainda não esta funcionando
         
-        chat = Chating.model.start_chat(history=[]) #passa uma lista vazia
+        chat = Chating_IA.model.start_chat(history=[]) #passa uma lista vazia
 
-        print(f"Essa conversa deverá ser em {Chating.idioma} e você pode usar algumas ferramentas, \
+        print(f"Essa conversa deverá ser em {Chating_IA.idioma} e você pode usar algumas ferramentas, \
     veja quais são elas:\n      - Digite dica para receber dicas do que \
     responder na conversa.\n      - Digite traduza para ver a tradução da conversa.\
     \n      - Digite fim para sair do exercício de conversação.\n\n")
@@ -255,25 +255,25 @@ class Chating:
         assunto = "quem esta se conhecendo"
 
         response = chat.send_message(f"Inicie uma conversa no nível {nivel} sobre {assunto}, \
-                                    no idioma {Chating.idioma}, nós nos conhecemos agora!")
+                                    no idioma {Chating_IA.idioma}, nós nos conhecemos agora!")
         print("Dona Gemini: "+chat.history[-1].parts[0].text)
 
-        prompt = input(f"Sua vez, bom esstudo de {Chating.idioma}: ")
+        prompt = input(f"Sua vez, bom esstudo de {Chating_IA.idioma}: ")
         while prompt != "fim":
             if not (prompt == "dica" or prompt == "traduza"):
                 response = chat.send_message(prompt, stream=True)
                 print("Dona Gemini: ")
                 for chunk in response:
                     print(chunk.text)
-                if Chating.validaConversa(chat.history[-1].parts[0].text):
-                    response = chat.send_message("Mantenha a conversa lingua "+Chating.idioma)
+                if Chating_IA.validaConversa(chat.history[-1].parts[0].text):
+                    response = chat.send_message("Mantenha a conversa lingua "+Chating_IA.idioma)
             prompt = input("diga algo: ")
-            if Chating.validaConversa(prompt):
+            if Chating_IA.validaConversa(prompt):
                 if not (prompt == "dica" or prompt == "traduza" or prompt == "fim"):
                     print("SISTEMA: Se desejar trocar de idioma, digite 'fim' para sair desta conversa!")
             ultimaFrase = chat.history[-1].parts[0].text
             if prompt == "dica":
-                dicas = Chating.possiveis_respostas(texto=ultimaFrase)
+                dicas = Chating_IA.possiveis_respostas(texto=ultimaFrase)
                 j = 0
                 for i in range(3):
                     print("Opção {}: {}.".format(i+1 ,dicas["frase"][i]["descricao"]))
@@ -283,6 +283,6 @@ class Chating:
                 if not (j > len(dicas["frase"][i]["descricao"])):
                     prompt = dicas["frase"][j-1]["descricao"]
             if prompt == "traduza":
-                result = Chating.unica_pergunta("Traduza a seguinte frase para o português: {}".format(ultimaFrase))
+                result = Chating_IA.unica_pergunta("Traduza a seguinte frase para o português: {}".format(ultimaFrase))
                 print("A tradução da frase {} é a seguinte: \n {}".format(
                     result, ultimaFrase))

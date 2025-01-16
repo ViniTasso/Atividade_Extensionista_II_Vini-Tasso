@@ -3,6 +3,7 @@ from kivy.lang import Builder
 from kivy.uix.screenmanager import Screen
 from kivy.uix.button import Button
 from kivy.uix.boxlayout import BoxLayout
+from kivy.app import App
 
 Builder.load_file('views/main_screen.kv')
 class main_screen(Screen):
@@ -96,3 +97,7 @@ class main_screen(Screen):
         #quando clicar ele automaticamente já inicia o play
         #quando o botão muda o desenho para stop, se clicar em stop para a execução e muda o desenho para play
         pass
+
+    def handle_control_button_click(self, main_id):
+        print(f"Main button {main_id} clicked")
+        self.manager.current = "chat_screen"
