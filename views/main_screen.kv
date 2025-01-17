@@ -2,8 +2,7 @@
 <main_screen>:
     BoxLayout:
         orientation:"vertical"
-
-        # Seção superior
+        
         BoxLayout:
             id: "top_section"
             orientation:"horizontal"
@@ -28,20 +27,25 @@
                 text: "🇪🇸"
                 size_hint: 0.3, 1
                 on_press: app.handle_flag_click("es")
-
-        # Seção do meio (rolável)
-        ScrollView:
-            id: scroll_layout
-            size_hint: 1, 1
-            background_color: 15 , 100 , 50 , 1
-            BoxLayout:
-                id: middle_section
-                orientation: "vertical"
-                size_hint_y: 1 #None precisei preencher 100% pois não estava reajustando quando inseria widget
-                padding:10
-                spacing:20
-                background_color: 1 , 0 , 50 , 1
-                #bind: minimum_height=scroll_layout.setter("height")
+        ScreenManager:
+            id:submanager
+                # Seção superior
+            Screen:
+                name:"subscreen_1"
+                id: subscreen_1
+                # Seção do meio (rolável)
+                ScrollView:
+                    id: scroll_layout
+                    size_hint: 1, 1
+                    background_color: 15 , 100 , 50 , 1
+                    BoxLayout:
+                        id: middle_section
+                        orientation: "vertical"
+                        size_hint_y: 1 #None precisei preencher 100% pois não estava reajustando quando inseria widget
+                        padding:10
+                        spacing:20
+                        background_color: 1 , 0 , 50 , 1
+                        #bind: minimum_height=scroll_layout.setter("height")
 
         BoxLayout:
             id: "bottom_section"

@@ -2,6 +2,7 @@
 import pygame #apenas para evitar erro de compatibilidade com a biblioteca 
 from kivy.app import App
 from kivy.uix.screenmanager import ScreenManager
+from kivy.uix.boxlayout import BoxLayout
 
 
 #BIBLIOTECAS PESSOAIS
@@ -12,10 +13,12 @@ from views.chat_screen import chat_screen
 
 class main(App):
     def build(self):
+        
         sm = ScreenManager()
         sm.add_widget(main_screen(name="main_screen"))
         sm.add_widget(chat_screen(name="chat_screen"))
         return sm
+    
     def handle_flag_click(self, language):
         print(f"Selected prefered language: {language}")
 if __name__ == "__main__":

@@ -2,7 +2,8 @@
 #   ChatScreen:
 
 <chat_screen>:
-    #name: "chat"
+  #  name: "chat_screen"
+
 
     BoxLayout:
         id: box_principal
@@ -18,7 +19,7 @@
             orientation: "horizontal"
             canvas.before:
                 Color:
-                    rgba: 0.2, 0.2, 0.2, 1
+                    rgba: 0.2, 0.2, 255, 1
                 Rectangle:
                     pos: self.pos
                     size: self.size
@@ -28,28 +29,58 @@
                 size_hint_x: 0.1
                 on_press: root.handle_back_action("voltar")
             Label:
+                text: 'Hello'
+                background_color: 255, 0, 0, 1
+                size_hint: 1,.8
+                canvas.before:
+                    Color:
+                        rgba: 255, 255, 255, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
+            Label:
                 text: "Sra Gemini - IA"
                 size_hint_x: 0.8
                 halign: "center"
                 valign: "middle"
+                
             Button:
                 text: "Search"
                 size_hint_x: 0.1
         ScrollView:
+            height: root.height
+            do_scroll_x: False
+            canvas.before:
+                Color:
+                    rgba: 255, 0.2, 255, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
             BoxLayout:
+                canvas.before:
+                    Color:
+                        rgba: 00, 12, 100, 1
+                    Rectangle:
+                        pos: self.pos
+                        size: self.size
                 id: chat_box
                 orientation: "vertical"
                 size_hint_y: None
                 height: self.minimum_height
                 spacing: 10
                 padding: [10, 10]
-
+                
         # Input bar
         BoxLayout:
             size_hint_y: 0.1
             spacing: 10
             padding: [10, 10]
-
+            canvas.before:
+                Color:
+                    rgba: 0.2, 255, 255, 1
+                Rectangle:
+                    pos: self.pos
+                    size: self.size
             TextInput:
                 id: message_input
                 hint_text: "Type a message..."

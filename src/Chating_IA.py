@@ -21,9 +21,10 @@ class Chating_IA:
     
     GOOGLE_API_KEY=os.getenv('GOOGLE_API_KEY')
     genai.configure(api_key=GOOGLE_API_KEY)
-    
         
     model = genai.GenerativeModel("models/gemini-1.0-pro")
+
+    chat = model.start_chat()
     idioma = "Ingles"
 
     def texto_padrao_dicas(texto, idioma="inglês"):
@@ -144,52 +145,6 @@ class Chating_IA:
             já são inseridos conforme solicitado.        
         """
 
-    def modelo_dicas_schema(texto):
-        """
-        
-        Descrição:
-            Esta função não está implementada no código fornecido. Ela parece ser destinada a criar 
-            um modelo baseado em expressões regulares para processar texto, mas atualmente retorna 
-            uma string vazia.
-
-        """
-        modelAI = Chating_IA.model
-        add_to_database = util.cria_Schema()
-        modelAI = modelAI = genai.GenerativeModel(
-            model_name='models/gemini-1.5-pro-latest',
-            tools = [add_to_database])
-
-        result = modelAI.generate_content(f"""
-            Adicione as frases de respostas, as traduções e as dicas, desse texto para dentro desse banco de dados:
-
-            {texto}
-            """,
-            # Force a function call
-            tool_config={'function_calling_config':'ANY'})
-
-        fc = result.candidates[0].content.parts[0].function_call
-        assert fc.name == 'add_to_database'
-        print(json.dumps(type(fc).to_dict(fc), indent=3))
-        return fc
-
-    def modelo_dica_regex(text):
-        """
-        Descrição:
-            Esta função não está implementada no código fornecido. 
-            
-            Ela parece ser destinada a criar um modelo baseado em expressões regulares para 
-            processar texto usando funções de regex.
-
-        Parâmetros:
-            - `text`: O texto da pergunta a ser gerada.
-
-        Retorno:
-            - A ideia e gerar um retorno estruturado e até transformado em lista de cada tópico.
-        
-        """
-        reg = text.splitlines()
-        regex = util.RegEx(reg)
-        return ""
 
     def traduzir_texto(texto):
         traducao = translator.translate(texto, dest=Chating_IA.idioma)
@@ -228,7 +183,7 @@ class Chating_IA:
         else:
             return False
         
-    def chat_principal():
+    def inicia_chat_principal(self, idioma="ingles", tema="Acidente de transito", assunto="dizer que o carro tem multa", nivel="basico"):
         """
         Função responsável por iniciar o módulo de conversação.
 
@@ -239,50 +194,34 @@ class Chating_IA:
         Returns:
             None
         """
-        print("Bem vindo ao módulo de conversa!\n \n Vamos aprender um idioma na prática??")
-        print("Escolha um assunto para conversar!")
+        
         #ainda não esta funcionando
         
-        chat = Chating_IA.model.start_chat(history=[]) #passa uma lista vazia
+        self.chat = Chating_IA.model.start_chat(history=[]) #passa uma lista vazia
+        if assunto != "":
+            assunto = ", com frase principal, " + assunto
 
-        print(f"Essa conversa deverá ser em {Chating_IA.idioma} e você pode usar algumas ferramentas, \
-    veja quais são elas:\n      - Digite dica para receber dicas do que \
-    responder na conversa.\n      - Digite traduza para ver a tradução da conversa.\
-    \n      - Digite fim para sair do exercício de conversação.\n\n")
+        primeira_mensagem = f"""Você é um professor de {idioma} e quer me ensinar o idioma. 
+         Você sabe que o meu nível é {nivel} e quer me ensinar por meio de um assunto que uso no meu trabalho,
+         o tema é: {tema}{assunto}. 
+         Inicie uma conversa comigo, limite sua mensagem para 60 palavras, primeiro envie a 
+         estrutura do conteúdo, depois converse sobre cada tópico comigo, limitando 60 palavras 
+         por mensagem. Ao invés de mandar todo conteúdo, quero que você evolua nossa conversa 
+         gradualmente a medida que você confirmar que eu entendi o conteúdo. 
+        Me traga exemplos e dicas e o que for necessario para melhor compreenssão. 
+        Inicie a conversa com "Olá querido aluno!" 
+        Sua resposta tem que ser o inicio de uma conversa!"""
+
+        response = self.chat.send_message(primeira_mensagem)
+
+        return self.chat.history[-1].parts[0].text
+    
+    def iteracao_IA(self, mensagem, idioma="ingles"):
+
+        response = self.chat.send_message(mensagem, stream=True)
         
+        for chunk in response:
+            print(chunk.text)
         
-        nivel = "básico"
-        assunto = "quem esta se conhecendo"
-
-        response = chat.send_message(f"Inicie uma conversa no nível {nivel} sobre {assunto}, \
-                                    no idioma {Chating_IA.idioma}, nós nos conhecemos agora!")
-        print("Dona Gemini: "+chat.history[-1].parts[0].text)
-
-        prompt = input(f"Sua vez, bom esstudo de {Chating_IA.idioma}: ")
-        while prompt != "fim":
-            if not (prompt == "dica" or prompt == "traduza"):
-                response = chat.send_message(prompt, stream=True)
-                print("Dona Gemini: ")
-                for chunk in response:
-                    print(chunk.text)
-                if Chating_IA.validaConversa(chat.history[-1].parts[0].text):
-                    response = chat.send_message("Mantenha a conversa lingua "+Chating_IA.idioma)
-            prompt = input("diga algo: ")
-            if Chating_IA.validaConversa(prompt):
-                if not (prompt == "dica" or prompt == "traduza" or prompt == "fim"):
-                    print("SISTEMA: Se desejar trocar de idioma, digite 'fim' para sair desta conversa!")
-            ultimaFrase = chat.history[-1].parts[0].text
-            if prompt == "dica":
-                dicas = Chating_IA.possiveis_respostas(texto=ultimaFrase)
-                j = 0
-                for i in range(3):
-                    print("Opção {}: {}.".format(i+1 ,dicas["frase"][i]["descricao"]))
-                
-                print("escolha uma das dicas para você utilizar: ")
-                j = int(input())
-                if not (j > len(dicas["frase"][i]["descricao"])):
-                    prompt = dicas["frase"][j-1]["descricao"]
-            if prompt == "traduza":
-                result = Chating_IA.unica_pergunta("Traduza a seguinte frase para o português: {}".format(ultimaFrase))
-                print("A tradução da frase {} é a seguinte: \n {}".format(
-                    result, ultimaFrase))
+        return self.chat.history[-1].parts[0].text
+            
